@@ -15,6 +15,9 @@ import { Friend } from './types';
 
     @if (selectedFriend() !== undefined) {
       <p>You selected {{ selectedFriend()?.name }}</p>
+      <button class="btn btn-danger" (click)="unfriend()">
+        Unfriend This Person?
+      </button>
     }
   `,
   styles: ``,
@@ -31,4 +34,13 @@ export class NewStuffComponent {
       name: 'Steve Smith',
     },
   ]);
+
+  unfriend() {
+    if (this.selectedFriend()) {
+      this.friends.update((f) =>
+        f.filter((f) => f.id !== this.selectedFriend()?.id),
+      );
+      this.selectedFriend.set(undefined);
+    }
+  }
 }
