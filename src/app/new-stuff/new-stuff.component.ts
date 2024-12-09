@@ -1,13 +1,21 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  computed,
+} from '@angular/core';
 import { FriendListComponent } from './components/friend-list.component';
 import { Friend } from './types';
+import { FriendStatsComponent } from './components/friend-stats.component';
+import { FriendCreateComponent } from './components/friend-create.component';
 
 @Component({
   selector: 'app-new-stuff',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FriendListComponent],
+  imports: [FriendListComponent, FriendStatsComponent, FriendCreateComponent],
   template: `
     <p>Meal Trading</p>
+    <app-friend-stats [numberOfFriends]="numberOfFriends()" />
     <app-friend-list
       [peopleToList]="friends()"
       (personSelected)="selectedFriend.set($event)"
@@ -19,11 +27,15 @@ import { Friend } from './types';
         Unfriend This Person?
       </button>
     }
+
+    <app-friend-create (personAdded)="addFriend($event)" />
   `,
   styles: ``,
 })
 export class NewStuffComponent {
   selectedFriend = signal<Friend | undefined>(undefined);
+
+  numberOfFriends = computed(() => this.friends().length);
   friends = signal<Friend[]>([
     {
       id: '1',
@@ -35,6 +47,13 @@ export class NewStuffComponent {
     },
   ]);
 
+  addFriend(name: string) {
+    const friendToAdd: Friend = {
+      name,
+      id: crypto.randomUUID(),
+    };
+    this.friends.set([friendToAdd, ...this.friends()]);
+  }
   unfriend() {
     if (this.selectedFriend()) {
       this.friends.update((f) =>
