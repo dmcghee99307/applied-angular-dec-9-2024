@@ -14,7 +14,7 @@ import { FriendCreateComponent } from './components/friend-create.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FriendListComponent, FriendStatsComponent, FriendCreateComponent],
   template: `
-    <p>Meal Trading</p>
+    <p>Going out to meals with friends is fun.</p>
     <app-friend-stats [numberOfFriends]="numberOfFriends()" />
     <app-friend-list
       [peopleToList]="friends()"
