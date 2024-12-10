@@ -1,6 +1,7 @@
 import {
   patchState,
   signalStore,
+  watchState,
   withComputed,
   withHooks,
   withMethods,
@@ -66,6 +67,14 @@ export const FriendsStore = signalStore(
         { id: '3', name: 'Michelle' },
       ];
       patchState(store, setEntities(fakeFriends));
+
+      const savedTempName = localStorage.getItem('tempname');
+      if (savedTempName !== null) {
+        patchState(store, { savedName: savedTempName });
+      }
+      watchState(store, (state) => {
+        localStorage.setItem('tempname', state.savedName);
+      });
     },
   }),
 );
