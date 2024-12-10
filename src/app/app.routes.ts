@@ -20,6 +20,11 @@ export const routes: Routes = [
     loadChildren: () => import('./atm/atm.routes').then((r) => r.ATM_ROUTES),
   },
   {
+    path: 'counter',
+    loadChildren: () =>
+      import('./counter/counter.routes').then((r) => r.COUNTER_ROUTES),
+  },
+  {
     path: 'demo',
     component: DemoComponent,
   },
