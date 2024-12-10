@@ -18,11 +18,13 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 type FriendsState = {
   selectedFriend: string | undefined;
+  savedName: string;
 };
 export const FriendsStore = signalStore(
   withDevtools('freinds'),
   withState<FriendsState>({
     selectedFriend: undefined,
+    savedName: '',
   }),
   withEntities<Friend>(),
   withComputed((store) => {
@@ -38,6 +40,7 @@ export const FriendsStore = signalStore(
   }),
   withMethods((store) => {
     return {
+      setSavedName: (name: string) => patchState(store, { savedName: name }),
       setSelectedFriend: (friend: string) =>
         patchState(store, { selectedFriend: friend }),
       addFriend: (name: string) => {
@@ -45,7 +48,7 @@ export const FriendsStore = signalStore(
           name,
           id: crypto.randomUUID(),
         };
-        patchState(store, addEntity(friendToAdd));
+        patchState(store, addEntity(friendToAdd), { savedName: '' });
       },
       unFriend: () => {
         if (store.selectedFriend() !== undefined) {
