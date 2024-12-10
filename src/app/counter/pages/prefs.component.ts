@@ -1,10 +1,5 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  inject,
-} from '@angular/core';
-import { ByValues, CounterStore } from '../services/counter.store';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CounterStore } from '../services/counter.store';
 
 @Component({
   selector: 'app-counter-prefs',
