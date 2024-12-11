@@ -7,7 +7,7 @@ import { CounterStore } from '../services/counter.store';
   imports: [],
   template: `
     <div class="join">
-      @for (val of vals; track val) {
+      @for (val of store.byValues(); track val) {
         <button
           (click)="store.changeCountBy(val)"
           [disabled]="store.by() === val"
@@ -22,5 +22,4 @@ import { CounterStore } from '../services/counter.store';
 })
 export class PrefsComponent {
   store = inject(CounterStore);
-  vals = this.store.byValues();
 }
